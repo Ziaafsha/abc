@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 5000;
 const db = require("./database");
-const router = require("./route");
+const router = require("./route/mapping");
 
 app.use(express.json());
 app.use("/api", router);

@@ -98,11 +98,11 @@ const delCategory = async (req, res) => {
             return res.json({ status: 404, error: "Category not found" });
         }
 
+        const delCategory = `DELETE FROM todos WHERE category_id = ?`
+        await db.query(delCategory, [id]);
+
         const deleteCategory = `DELETE FROM categories WHERE id = ?`;
         await db.query(deleteCategory, [id]);
-
-        const delCategory = `DELETE FROM categories WHERE id = ?`
-        await db.query(delCategory, [categories_id]);
        
         res.json({ status: 200, message: "Success" });
     } catch (error) {
