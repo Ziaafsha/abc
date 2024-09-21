@@ -2,7 +2,16 @@ const db = require("../database")
 
 const getTodos = async (req, res) => {
     try {
-        const [result] = await db.query(`SELECT * FROM todos`);
+        const { category_id } = req.query;
+
+        let query = `Select * from todos `;
+        if (category_id) {
+            query += (`Where category_id = ${category_id}`)
+        }
+
+
+        const [result] = await db.query(query);
+
         res.json({ status: 200, message: "Success", data: result });
     } catch (error) {
         console.error("Something went wrong: " + error.stack);
@@ -90,7 +99,7 @@ const deleteTodo = async (req, res) => {
         if (result.length === 0) {
             return res.json({ status: 400, message: "Todo not found" });
         }
-        res.json({status: 200, message: "Success"});
+        res.json({ status: 200, message: "Success" });
     } catch (err) {
         console.error(err);
         res.json({ status: 400, error: err.message });
